@@ -7,6 +7,7 @@ public class Solve {
 
     final String PATH_READ = "subway.txt";
     final String PATH_WRITE = "station.txt";
+    final String PATH_ROUTINE = "routine.txt";
     static List<Line> lines = new ArrayList<Line>();
     static List<Station> stations = new ArrayList<Station>();
     static HashMap<String, Station> map = new HashMap<>();
@@ -86,9 +87,10 @@ public class Solve {
             System.err.println("read errors: " + e);
         }
     }
+
     public void getStationByLine(String name) {
         String path =System.getProperty("user.dir") + File.separator + "\\" +PATH_WRITE;
-        String content = ""+name;
+        String content = ""+name+":  ";
         List<String> ans = new ArrayList<String>();
         for (Line line : lines) {
             if (line.name.equals(name)) {
@@ -97,7 +99,7 @@ public class Solve {
             }
         }
         for (String station : ans) {
-            content = content + station;
+            content = content + station+"->";
         }
         try {
             File file = new File(path);
@@ -115,7 +117,59 @@ public class Solve {
         }
 
     }
+    public void BFS(String st, String ed) {
+        for (Map.Entry<String, Station> entry : map.entrySet()) {
+            entry.getValue().setVisited( false );
+        }
+        Queue<String> queue = new LinkedList<>();
+        queue.add(st);
+        while(!queue.isEmpty()) {
+            String now = queue.poll();
+            map.get( now ).setVisited( true );
 
+            if(now.equals(ed)) {
+                break;
+            }
+            for(Station station : map.get(now).nextStation) {
+                if(map.get(station.name).visited==false) {
+                    map.get(station.name).preStation = now;
+                    queue.add(station.name);
+                }
+            }
+        }
+    }
+    public void printPath(String st, String ed) {
+        String path=System.getProperty("user.dir") + File.separator + "\\" +PATH_ROUTINE;
+        List<String> list = new ArrayList<>();
+        String now = ed;
+        String content="";
+        while(!now.equals(st)) {
+            list.add(now);
+            now = map.get(now).preStation;
+        }
+        list.add( st );
+        Collections.reverse(list);
+        list.stream().forEach( x-> System.out.println(x) );
+        for (String s :
+                list) {
+            content = content + s +"->";
+        }
+
+        try {
+            File file = new File(path);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fileWriter);
+            bw.write(content);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            System.out.println("finish");
+        }
+    }
     public static void main(String[] args) {
 
 

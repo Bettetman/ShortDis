@@ -13,6 +13,7 @@ public class SolveTest {
         System.out.println("line"+"\n");
         solve.lines.stream().forEach( x-> System.out.println(x.toString()) );
         System.out.println("key"+"\n");
+        System.out.println( solve.map.keySet().size() );
         solve.map.keySet().forEach( x-> System.out.println(x) );
     }
 
@@ -21,5 +22,20 @@ public class SolveTest {
         Solve solve = new Solve();
         solve.getSubwayMessage();
         solve.getStationByLine("2号线");
+    }
+
+    @Test
+    public void BFS() {
+        Solve solve = new Solve();
+        solve.getSubwayMessage();
+        solve.BFS( "积水潭","朝阳门" );
+    }
+
+    @Test
+    public void printPath() {
+        Solve solve = new Solve();
+        solve.getSubwayMessage();
+        solve.BFS( "积水潭","朝阳门" );
+        solve.printPath("积水潭","朝阳门"   );
     }
 }
