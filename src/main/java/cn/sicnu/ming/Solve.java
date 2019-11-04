@@ -24,7 +24,7 @@ public class Solve {
 
             while ((getLine = bufferedReader.readLine()) != null) {
                 Line line = new Line();
-                String[] lineList = getLine.split(" ");
+                String[] lineList = getLine.trim().split(" ");
                 line.id = cnt;
                 line.name = lineList[0];
                 for(int i = 1; i <=lineList.length-1; i++) {
@@ -40,11 +40,50 @@ public class Solve {
                           station1.nextStation.add(station2);
                           station2.nextStation.add( station1 );
                           map.put( lineList[i],station1 );
-                          map.put( lineList[i],station1 );
-                        }else{
-                          if(map.containsKey( lineList[i] ))
+                          map.put( lineList[i+1],station2 );
+                          continue;
                         }
-
+                        if(map.containsKey(lineList[i])||!map.containsKey( lineList[i+1] )){
+                            Station station = new Station(lineList[i+1]);
+                            station.lineNow.add( line.name );
+                            Station station1 = map.get( lineList[i] );
+                            if(!station1.lineNow.contains( line.name ))
+                            {
+                             station1.getLineNow().add( line.name );
+                            }
+                            station.getNextStation().add( station1 );
+                            station1.getNextStation().add( station );
+                            map.put( lineList[i+1],station);
+                            continue;
+                        }
+                        if (!map.containsKey(lineList[i])||map.containsKey( lineList[i+1] )) {
+                            Station station = new Station(lineList[i]);
+                            station.lineNow.add( line.name );
+                            Station station1 = map.get( lineList[i+1] );
+                            if(!station1.lineNow.contains( line.name ))
+                            {
+                                station1.getLineNow().add( line.name );
+                            }
+                            station.getNextStation().add( station1 );
+                            station1.getNextStation().add( station );
+                            map.put( lineList[i],station);
+                            continue;
+                        }
+                        if (map.containsKey(lineList[i])||map.containsKey( lineList[i+1] )){
+                            Station station1 = map.get( lineList[i] );
+                            Station station2 = map.get( lineList[i+1] );
+                            if(!station1.lineNow.contains( line.name ))
+                            {
+                                station1.getLineNow().add( line.name );
+                            }
+                            if(!station2.lineNow.contains( line.name ))
+                            {
+                                station2.getLineNow().add( line.name );
+                            }
+                            station1.getNextStation().add( station2 );
+                            station2.getNextStation().add( station1 );
+                            continue;
+                        }
                     }else if(i==lineList.length-1)
                     {
                         if(!map.containsKey(lineList[i])) {
