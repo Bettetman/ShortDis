@@ -27,58 +27,37 @@ public class Solve {
                 String[] lineList = getLine.split(" ");
                 line.id = cnt;
                 line.name = lineList[0];
+                for(int i = 1; i <=lineList.length-1; i++) {
 
-                for(int i = 1; i <lineList.length-1; i++) {
-                    Station station1 = new Station();
-                    Station station2 = new Station();
+                    if (i<lineList.length-1)
+                    {
 
-                    if(map.containsKey(lineList[i])) {
-                        station1 = map.get(lineList[i]);
-                        map.remove(lineList[i]);
-                    } else {
-                        station1.setName(lineList[i] );
-                        station1.setVisited( false );
+                        if(!map.containsKey(lineList[i])||!map.containsKey( lineList[i+1] )) {
+                          Station station1 = new Station(lineList[i]);
+                          Station station2 = new Station(lineList[i+1]);
+                          station1.lineNow.add( line.name );
+                          station2.lineNow.add( line.name );
+                          station1.nextStation.add(station2);
+                          station2.nextStation.add( station1 );
+                          map.put( lineList[i],station1 );
+                          map.put( lineList[i],station1 );
+                        }else{
+                          if(map.containsKey( lineList[i] ))
+                        }
+
+                    }else if(i==lineList.length-1)
+                    {
+                        if(!map.containsKey(lineList[i])) {
+                            Station station = new Station(lineList[i]);
+                            station.lineNow.add( line.name );
+                            map.put( lineList[i],station );
+                        }
+                        else {
+                            map.get(lineList[i]).lineNow.add( line.name );
+                        }
                     }
 
-                    if(map.containsKey(lineList[i+1])) {
-                        station2 = map.get(lineList[i+1]);
-                        map.remove(lineList[i+1]);
-                    } else {
-                        station2.setName(lineList[i+1]);
-                        station2.setVisited( false );
-                    }
-
-                    if(!station1.lineNow.contains(line.name)) {
-                        station1.lineNow.add(line.name);
-                    }
-
-                    if(!station2.lineNow.contains(line.name)) {
-                        station2.lineNow.add(line.name);
-                    }
-
-                    if(!station1.nextStation.contains(station2)) {
-                        station1.nextStation.add(station2);
-                    }
-
-                    if(!station2.nextStation.contains(station1)) {
-                        station2.nextStation.add(station1);
-                    }
-
-                    station1.preStation = station1.name;
-                    station2.preStation = station2.name;
-//                    System.out.println(list[i] + "   " + station1.name);
-//                    System.out.println("-----------------");
-                    map.put(lineList[i], station1);
-                    map.put(lineList[i+1], station2);
-
-                    if (!line.stations.contains(station1.name)) {
-                        line.stations.add(station1.name);
-                    }
-                    if (!line.stations.contains(station2.name)) {
-                        line.stations.add(station2.name);
-                    }
                 }
-
                 lines.add(line);
                 cnt++;
             }
@@ -117,6 +96,7 @@ public class Solve {
         }
 
     }
+
     public void BFS(String st, String ed) {
         for (Map.Entry<String, Station> entry : map.entrySet()) {
             entry.getValue().setVisited( false );
@@ -138,6 +118,7 @@ public class Solve {
             }
         }
     }
+
     public void printPath(String st, String ed) {
         String path=System.getProperty("user.dir") + File.separator + "\\" +PATH_ROUTINE;
         List<String> list = new ArrayList<>();
@@ -154,7 +135,6 @@ public class Solve {
                 list) {
             content = content + s +"->";
         }
-
         try {
             File file = new File(path);
             if(!file.exists()){

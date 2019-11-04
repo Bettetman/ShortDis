@@ -10,6 +10,12 @@ public class Station {
     List<String> lineNow = new ArrayList<String>();
     List<Station> nextStation = new ArrayList<Station>();
 
+    public Station(){}
+
+    public Station(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
