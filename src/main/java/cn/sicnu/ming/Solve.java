@@ -10,7 +10,7 @@ public class Solve {
     final String PATH_ROUTINE = "routine.txt";
     static List<Line> lines = new ArrayList<Line>();
     static List<Station> stations = new ArrayList<Station>();
-    static HashMap<String, Station> map = new HashMap<>();
+    public  HashMap<String, Station> map = new HashMap<>();
 
     public void getSubwayMessage() {
 
@@ -31,10 +31,6 @@ public class Solve {
                     line.getStations().add( lineList[i] );
                     if (i<lineList.length-1)
                     {
-                        boolean a = map.containsKey(lineList[i]);
-                        boolean b = map.containsKey(lineList[i+1]);
-
-                        boolean d = (!a)&&(!b);
                         if(!map.containsKey(lineList[i])&&!map.containsKey( lineList[i+1] )) {
                           Station station1 = new Station(lineList[i]);
                           Station station2 = new Station(lineList[i+1]);
@@ -95,7 +91,8 @@ public class Solve {
                             map.put( lineList[i],station );
                         }
                         else {
-                            map.get(lineList[i]).lineNow.add( line.name );
+                            if (!map.get(lineList[i]).getLineNow().contains( line.name ))
+                                map.get(lineList[i]).lineNow.add( line.name );
                         }
                     }
 
@@ -147,6 +144,7 @@ public class Solve {
         queue.add(st);
         while(!queue.isEmpty()) {
             String now = queue.poll();
+            Station u = map.get( now );
             map.get( now ).setVisited( true );
 
             if(now.equals(ed)) {
@@ -162,6 +160,7 @@ public class Solve {
     }
 
     public void printPath(String st, String ed) {
+        BFS( st,ed );
         String path=System.getProperty("user.dir") + File.separator + "\\" +PATH_ROUTINE;
         List<String> list = new ArrayList<>();
         String now = ed;

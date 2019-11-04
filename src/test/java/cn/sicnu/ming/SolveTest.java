@@ -22,21 +22,20 @@ public class SolveTest {
     public void getStationByLine() {
         Solve solve = new Solve();
         solve.getSubwayMessage();
-        solve.getStationByLine("2号线");
+        solve.getStationByLine("1号线");
     }
 
     @Test
     public void BFS() {
         Solve solve = new Solve();
         solve.getSubwayMessage();
-//        solve.BFS( "积水潭","朝阳门" );
+        solve.BFS( "刘园","鼓楼");
+        solve.printPath( "刘园","鼓楼" );
+
     }
 
     @Test
     public void printPath() {
-        Solve solve = new Solve();
-        solve.getSubwayMessage();
-        solve.BFS( "刘园 ","鼓楼"   );
-        solve.printPath("刘园 ","鼓楼"   );
+
     }
 }
