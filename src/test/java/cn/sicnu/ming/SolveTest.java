@@ -39,10 +39,6 @@ public class SolveTest {
 
     }
 
-    @Test
-    public void printPath() {
-
-    }
 
     @Test
     public void calStationofLine() {
@@ -80,8 +76,8 @@ public class SolveTest {
     public void output() {
         Solve solve = new Solve();
         solve.getSubwayMessage();
-        List list = solve.calPassStations( "刘园", "鼓楼" );
+        List list = solve.calPassStations( "乐园道", "鼓楼" );
         solve.getChangeInfo(list);
-       solve.output(list);
+        solve.output(list);
     }
 }

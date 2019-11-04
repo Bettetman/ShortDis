@@ -161,35 +161,21 @@ public class Solve {
 
     public List calPassStations(String st, String ed) {
         BFS( st,ed );
-        String path=System.getProperty("user.dir") + File.separator + "\\" +PATH_ROUTINE;
         List<String> list = new ArrayList<>();
         String now = ed;
-        String content="";
+//        String content="";
         while(!now.equals(st)) {
             list.add(now);
             now = map.get(now).preStation;
         }
         list.add( st );
         Collections.reverse(list);
-        list.stream().forEach( x-> System.out.println(x) );
-        for (String s :
-                list) {
-            content = content + s +"->";
-        }
-        try {
-            File file = new File(path);
-            if(!file.exists()){
-                file.createNewFile();
-            }
-            FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fileWriter);
-            bw.write(content);
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            System.out.println("finish");
-        }
+//        list.stream().forEach( x-> System.out.println(x) );
+//        for (String s :
+//                list) {
+//            content = content + s +"->";
+//        }
+//        System.out.println("finish");
         return list;
     }
 
@@ -222,15 +208,15 @@ public class Solve {
                     content=content+map.get( list.get( i-1)).getName()+"\n";
                 }
                 else {
-                    content=content+ "换乘"+map.get( list.get( i-2)).getLine()+"\n"+map.get( list.get( i-1)).getName()+"\n";
+                    content=content+map.get( list.get( i-2)).getLine()+"\n"+map.get( list.get( i-1)).getName()+"\n";
                 }
             }
-            if (map.get( list.get(0)).getLine().equals(map.get( list.get(1)).getLine())){
+//            if (map.get( list.get(0)).getLine().equals(map.get( list.get(1)).getLine())){
                 content=content+map.get( list.get( 0)).getName()+"\n";
-            }
-            else {
-                content=content+ "换乘"+map.get( list.get(0)).getLine()+"\n"+map.get( list.get(0)).getName()+"\n";
-            }
+//            }
+//            else {
+//                content=content+ map.get( list.get(0)).getLine()+"\n"+map.get( list.get(0)).getName()+"\n";
+//            }
 
         }catch (NullPointerException e)
         {
@@ -239,6 +225,19 @@ public class Solve {
         }
         finally {
             System.out.println(content);
+            String path=System.getProperty("user.dir") + File.separator + "\\" +PATH_ROUTINE;
+            try {
+                File file = new File(path);
+                if(!file.exists()){
+                    file.createNewFile();
+                }
+                FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+                BufferedWriter bw = new BufferedWriter(fileWriter);
+                bw.write(content);
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
