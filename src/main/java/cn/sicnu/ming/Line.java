@@ -8,6 +8,10 @@ public class Line {
     String name;
     List<String> stations = new ArrayList<>();
 
+    public List<String> getStations() {
+        return stations;
+    }
+
     @Override
     public String toString() {
         String s="";

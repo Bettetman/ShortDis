@@ -15,7 +15,7 @@ public class SolveTest {
         System.out.println("key"+"\n");
         System.out.println( solve.map.keySet().size() );
         solve.map.keySet().forEach( x-> System.out.println(x) );
-        solve.map.values().forEach( x-> System.out.println(x.getLineNow()+"   "+x.nextStation) );
+        solve.map.values().forEach( x-> System.out.println(x.getLineNow()+"name:"+x.getName()+"station:"+x.nextStation) );
     }
 
     @Test
@@ -36,7 +36,7 @@ public class SolveTest {
     public void printPath() {
         Solve solve = new Solve();
         solve.getSubwayMessage();
-        solve.BFS( "东直门 ","宣武门"   );
-        solve.printPath("东直门 ","宣武门"   );
+        solve.BFS( "刘园 ","鼓楼"   );
+        solve.printPath("刘园 ","鼓楼"   );
     }
 }

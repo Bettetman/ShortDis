@@ -28,11 +28,14 @@ public class Solve {
                 line.id = cnt;
                 line.name = lineList[0];
                 for(int i = 1; i <=lineList.length-1; i++) {
-
+                    line.getStations().add( lineList[i] );
                     if (i<lineList.length-1)
                     {
+                        boolean a = map.containsKey(lineList[i]);
+                        boolean b = map.containsKey(lineList[i+1]);
 
-                        if(!map.containsKey(lineList[i])||!map.containsKey( lineList[i+1] )) {
+                        boolean d = (!a)&&(!b);
+                        if(!map.containsKey(lineList[i])&&!map.containsKey( lineList[i+1] )) {
                           Station station1 = new Station(lineList[i]);
                           Station station2 = new Station(lineList[i+1]);
                           station1.lineNow.add( line.name );
@@ -43,7 +46,7 @@ public class Solve {
                           map.put( lineList[i+1],station2 );
                           continue;
                         }
-                        if(map.containsKey(lineList[i])||!map.containsKey( lineList[i+1] )){
+                        if(map.containsKey(lineList[i])&&!map.containsKey( lineList[i+1] )){
                             Station station = new Station(lineList[i+1]);
                             station.lineNow.add( line.name );
                             Station station1 = map.get( lineList[i] );
@@ -56,7 +59,7 @@ public class Solve {
                             map.put( lineList[i+1],station);
                             continue;
                         }
-                        if (!map.containsKey(lineList[i])||map.containsKey( lineList[i+1] )) {
+                        if (!map.containsKey(lineList[i])&&map.containsKey( lineList[i+1] )) {
                             Station station = new Station(lineList[i]);
                             station.lineNow.add( line.name );
                             Station station1 = map.get( lineList[i+1] );
@@ -69,7 +72,7 @@ public class Solve {
                             map.put( lineList[i],station);
                             continue;
                         }
-                        if (map.containsKey(lineList[i])||map.containsKey( lineList[i+1] )){
+                        if (map.containsKey(lineList[i])&&map.containsKey( lineList[i+1] )){
                             Station station1 = map.get( lineList[i] );
                             Station station2 = map.get( lineList[i+1] );
                             if(!station1.lineNow.contains( line.name ))
