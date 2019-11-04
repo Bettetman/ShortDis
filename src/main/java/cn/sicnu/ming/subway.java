@@ -42,7 +42,7 @@ public class subway {
                 if(split[1].equals(split[2]))
                     System.out.println("输入站点重复，请重新输入");
                 else {
-                    solve.printPath( split[1],split[2] );
+//                    solve.printPath( split[1],split[2] );
                 }
             }else{
                 System.out.println("输入错误，请重新输入");

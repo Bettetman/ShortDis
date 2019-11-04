@@ -7,10 +7,19 @@ public class Station {
     String name;
     boolean visited;
     String preStation;
+    String line;
     List<String> lineNow = new ArrayList<String>();
     List<Station> nextStation = new ArrayList<Station>();
 
     public Station(){}
+
+    public String getLine() {
+        return line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
+    }
 
     public Station(String name) {
         this.name = name;

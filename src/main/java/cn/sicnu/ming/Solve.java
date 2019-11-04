@@ -136,7 +136,7 @@ public class Solve {
 
     }
 
-    public void BFS(String st, String ed) {
+    private void BFS(String st, String ed) {
         for (Map.Entry<String, Station> entry : map.entrySet()) {
             entry.getValue().setVisited( false );
         }
@@ -159,7 +159,7 @@ public class Solve {
         }
     }
 
-    public void printPath(String st, String ed) {
+    public List calPassStations(String st, String ed) {
         BFS( st,ed );
         String path=System.getProperty("user.dir") + File.separator + "\\" +PATH_ROUTINE;
         List<String> list = new ArrayList<>();
@@ -190,9 +190,55 @@ public class Solve {
         }finally {
             System.out.println("finish");
         }
+        return list;
     }
-    public static void main(String[] args) {
 
+    public void  getChangeInfo(List<String> list){
+            int  listlegth = list.size();
+            try {
+                for(int i = listlegth;i>1;i--)
+                {
+                    String getline = Util.calStationofLine( map.get( list.get( i-1 ) ),map.get( list.get(i-2)));
+                    map.get(list.get( i-1 )).setLine( getline );
+                }
+                map.get(list.get(0)).setLine(map.get(list.get(1)).getLine());
+            }catch (NullPointerException e)
+            {
+                e.printStackTrace();
+                System.out.println("你没有初始化数据段");
+            }
 
+    }
+
+    public void  output(List<String> list){
+        String content="";
+        Collections.reverse(list);
+        int  listlegth = list.size();
+        content+=String.valueOf(listlegth)+"\n";
+        try {
+            for(int i = listlegth;i>1;i--)
+            {
+                if (map.get( list.get( i-1)).getLine().equals(map.get( list.get(i-2)).getLine())){
+                    content=content+map.get( list.get( i-1)).getName()+"\n";
+                }
+                else {
+                    content=content+ "换乘"+map.get( list.get( i-2)).getLine()+"\n"+map.get( list.get( i-1)).getName()+"\n";
+                }
+            }
+            if (map.get( list.get(0)).getLine().equals(map.get( list.get(1)).getLine())){
+                content=content+map.get( list.get( 0)).getName()+"\n";
+            }
+            else {
+                content=content+ "换乘"+map.get( list.get(0)).getLine()+"\n"+map.get( list.get(0)).getName()+"\n";
+            }
+
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            System.out.println("你没有初始化数据段");
+        }
+        finally {
+            System.out.println(content);
+        }
     }
 }
